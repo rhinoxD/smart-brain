@@ -11,6 +11,7 @@ import FaceRecognition from './components/FaceRecognition/FaceRecognition';
 import particleOptions from './particles.json';
 import './App.css';
 import Signin from './components/Signin/Signin';
+import Register from './components/Register/Register';
 
 const app = new Clarifai.App({
   apiKey: process.env.REACT_APP_API_KEY,
@@ -21,6 +22,7 @@ function App() {
   const [imageUrl, setImageUrl] = useState('');
   const [box, setBox] = useState({});
   const [route, setRoute] = useState('signin');
+  const [isSignedIn, setIsSignedIn] = useState(false);
   const calculateFaceLocation = (data) => {
     const clarifaiFace =
       data.outputs[0].data.regions[0].region_info.bounding_box;
@@ -48,6 +50,11 @@ function App() {
       .catch((err) => console.log(err));
   };
   const onRouteChange = (route) => {
+    if (route === 'signout') {
+      setIsSignedIn(false);
+    } else if (route === 'home') {
+      setIsSignedIn(true);
+    }
     setRoute(route);
   };
   const particlesInit = useCallback((main) => {
@@ -56,10 +63,8 @@ function App() {
   return (
     <div className='App'>
       <Particles options={particleOptions} init={particlesInit} />
-      <Navigation onRouteChange={onRouteChange} />
-      {route === 'signin' ? (
-        <Signin onRouteChange={onRouteChange} />
-      ) : (
+      <Navigation isSignedIn={isSignedIn} onRouteChange={onRouteChange} />
+      {route === 'home' ? (
         <>
           <Logo />
           <Rank />
@@ -69,6 +74,10 @@ function App() {
           />
           <FaceRecognition box={box} imageUrl={imageUrl} />
         </>
+      ) : route === 'signin' ? (
+        <Signin onRouteChange={onRouteChange} />
+      ) : (
+        <Register onRouteChange={onRouteChange} />
       )}
     </div>
   );
