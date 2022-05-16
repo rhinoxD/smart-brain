@@ -20,6 +20,7 @@ function App() {
   const [input, setInput] = useState('');
   const [imageUrl, setImageUrl] = useState('');
   const [box, setBox] = useState({});
+  const [route, setRoute] = useState('signin');
   const calculateFaceLocation = (data) => {
     const clarifaiFace =
       data.outputs[0].data.regions[0].region_info.bounding_box;
@@ -46,21 +47,29 @@ function App() {
       .then((response) => displayFaceBox(calculateFaceLocation(response)))
       .catch((err) => console.log(err));
   };
+  const onRouteChange = (route) => {
+    setRoute(route);
+  };
   const particlesInit = useCallback((main) => {
     loadFull(main);
   }, []);
   return (
     <div className='App'>
       <Particles options={particleOptions} init={particlesInit} />
-      <Navigation />
-      <Signin />
-      <Logo />
-      <Rank />
-      <ImageLinkForm
-        onInputChange={onInputChange}
-        onButtonSubmit={onButtonSubmit}
-      />
-      <FaceRecognition box={box} imageUrl={imageUrl} />
+      <Navigation onRouteChange={onRouteChange} />
+      {route === 'signin' ? (
+        <Signin onRouteChange={onRouteChange} />
+      ) : (
+        <>
+          <Logo />
+          <Rank />
+          <ImageLinkForm
+            onInputChange={onInputChange}
+            onButtonSubmit={onButtonSubmit}
+          />
+          <FaceRecognition box={box} imageUrl={imageUrl} />
+        </>
+      )}
     </div>
   );
 }
