@@ -10,6 +10,7 @@ import Rank from './components/Rank/Rank';
 import FaceRecognition from './components/FaceRecognition/FaceRecognition';
 import particleOptions from './particles.json';
 import './App.css';
+import Signin from './components/Signin/Signin';
 
 const app = new Clarifai.App({
   apiKey: process.env.REACT_APP_API_KEY,
@@ -52,6 +53,7 @@ function App() {
     <div className='App'>
       <Particles options={particleOptions} init={particlesInit} />
       <Navigation />
+      <Signin />
       <Logo />
       <Rank />
       <ImageLinkForm
