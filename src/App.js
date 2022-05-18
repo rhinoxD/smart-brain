@@ -85,7 +85,18 @@ function App() {
   };
   const onRouteChange = (route) => {
     if (route === 'signout') {
+      setInput('');
+      setImageUrl('');
+      setBox({});
+      setRoute('');
       setIsSignedIn(false);
+      setUser({
+        id: '',
+        name: '',
+        email: '',
+        entries: 0,
+        joined: '',
+      });
     } else if (route === 'home') {
       setIsSignedIn(true);
     }
