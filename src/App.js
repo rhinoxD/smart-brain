@@ -77,7 +77,8 @@ function App() {
                 ...prevState,
                 entries: count.entries,
               }));
-            });
+            })
+            .catch(console.log);
         }
         displayFaceBox(calculateFaceLocation(response));
       })
