@@ -73,7 +73,10 @@ function App() {
           })
             .then((response) => response.json())
             .then((count) => {
-              setUser(Object.assign(user, { entries: count }));
+              setUser((prevState) => ({
+                ...prevState,
+                entries: count.entries,
+              }));
             });
         }
         displayFaceBox(calculateFaceLocation(response));
