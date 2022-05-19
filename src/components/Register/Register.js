@@ -14,7 +14,7 @@ const Register = ({ onRouteChange, loadUser }) => {
     setPassword(e.target.value);
   };
   const onSubmitRegister = () => {
-    fetch('http://localhost:3000/register', {
+    fetch('https://smart-brain-rhino.herokuapp.com/register', {
       method: 'post',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
